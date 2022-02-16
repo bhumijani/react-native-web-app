@@ -4,25 +4,22 @@ import * as Device from "expo-device";
 import { Camera } from "expo-camera";
 
 export default function App() {
-  // const [hasPermission, setHasPermission] = useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const { status } = await Camera.requestCameraPermissionsAsync();
-  //     setHasPermission(status === "granted");
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      //alert(status);
+      setHasPermission(status === "granted");
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} type={type} />
       <View style={{ justifyContent: "center", borderWidth: 2, padding: 20 }}>
-        {Device.isDevice && (
-          <Text style={{ fontSize: 20 }}>
-            Model: {Device.modelName} {Device.DeviceType}
-          </Text>
-        )}
+        <Text style={{ fontSize: 20 }}>Model: {Device.osName || "WEB"}</Text>
       </View>
     </View>
   );
